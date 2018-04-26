@@ -7,10 +7,13 @@ Objetivo deste teste é medir seu conhecimento sobre a plataforma JAVA bem como 
 Queremos que você elabore uma solução para o problema do nosso vendedor Samwell Tarly.
 
 ## Problema
-Samwell é um vendedor muito hábil. Ia de porta em porta oferecer seu campeão de vendas, o livro “As Crônicas de Gelo e Fogo”, anotava o pedido em seu bloco de notas, com as seguintes descrições: título, quantidade, valor e os dados do cliente que fechava negócio. 
-Ao final do dia Samwell pegava suas anotações, preenchia seu fichário e através de fax enviava o pedido para o fornecedor.
+Samwell é um vendedor muito hábil. Bate de porta em porta para oferecer livros (dentre tantos outros, seu campeão de vendas chama-se “As Crônicas de Gelo e Fogo”). A cada venda, Samwell pega seu caderninho amarelo e anota o pedido do cliente com o título do livro, quantidade, valor e os dados do cliente que fechou o negócio.
 
-Utilizando tecnologias JAVA, desenvolva um sistema web com o proposito de ajudar Samwell e o fornecedor de livros.
+Ao final do dia Samwell junta suas anotações, preenche seu fichário e envia todos os pedidos para o fornecedores (sim, por fax =0). Um belo dia, Samwell salvou a vida do CEO de uma empresa de software chamada Adsim (sem detalhes agora) e como prova de gratidão a empresa resolver ajudar o bravo vendedor de livros com um sistema que automatizasse seus pedidos de compra. 
+
+## Desafio
+
+Utilizando tecnologias JAVA, desenvolva um sistema web com o proposito de ajudar Samwell a enviar seus pedidos de compra para o fornecedor de livros.
 
 ## Será analisado
 
