@@ -9,7 +9,7 @@ Queremos que você elabore uma solução para o problema do nosso vendedor Samwe
 ## Problema
 Samwell é um vendedor muito hábil. Bate de porta em porta para oferecer livros (dentre tantos outros, seu campeão de vendas chama-se “As Crônicas de Gelo e Fogo”). A cada venda, Samwell pega seu caderninho amarelo e anota o pedido do cliente com o título do livro, quantidade, valor e os dados do cliente que fechou o negócio.
 
-Ao final do dia Samwell junta suas anotações, preenche seu fichário e envia todos os pedidos para o fornecedores (sim, por fax =0). Um belo dia, Samwell salvou a vida do CEO de uma empresa de software chamada Adsim (sem detalhes agora) e como prova de gratidão a empresa resolver ajudar o bravo vendedor de livros com um sistema que automatizasse seus pedidos de compra. 
+Ao final do dia Samwell junta suas anotações, preenche seu fichário e envia todos os pedidos para o fornecedores (sim, por fax 😱). Um belo dia, Samwell salvou a vida do CEO de uma empresa de software chamada Adsim (sem detalhes agora) e como prova de gratidão a empresa resolver ajudar o bravo vendedor de livros com um sistema que automatizasse seus pedidos de compra. 
 
 ## Desafio
 
