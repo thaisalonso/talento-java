@@ -22,4 +22,13 @@ Utilizando tecnologias JAVA, desenvolva um sistema web com o proposito de ajudar
 - Tecnologias envolvidas
 
 ### Observação
-Tecnologias atuais serão diferencial.
+Tecnologias atuais serão diferenciais na avaliação do seu projeto.
+
+
+### Como fazer
+
+- Clone nosso repositório git (não faça Fork!)
+- Desenvolva o código em sua máquina local
+- Suba o código em seu repositório no Github
+- Envie o link do seu repositório para jonsnow@adsim.com.br
+- Caso não saiba como trabalhar com o Git, Envie um zip do seu código para joffrey@adsim.com.br
