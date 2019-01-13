@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,42 +36,62 @@ public class PedidosControllerIT {
 	@Autowired
 	private LivrosController livrosController;
 	
-	@Test
-	@Transactional
-	public void incluir_quandoIncluirUmPedido_deveRetornarApenasUmPedido() {
-		
-		Livro livro1 = new Livro();
+	private Livro livro1;
+	private Livro livro2;
+	private List<Livro> livros;
+	private Cliente cliente1;
+	private Cliente cliente2;
+	private Pedido pedido1;
+	private Pedido pedido2;
+	
+	@Before
+	public void setUp() {
+		livro1 = new Livro();
 		livro1.setTitulo("O jogo dos tronos");
 		livro1.setDescricao("Livro 1 da série As Crônicas de Gelo e Fogo");
 		livro1.setAutor("George R. R. Martin");
 		livro1.setValor(new BigDecimal(40.00));
 		
-		Livro livro2 = new Livro();
+		livro2 = new Livro();
 		livro2.setTitulo("Deuses Americanos");
 		livro2.setDescricao("Uma mistura de fantasia e várias vertentes da mitologia antiga e moderna");
 		livro2.setAutor("Neil Gaiman");
 		livro2.setValor(new BigDecimal(45.00));
 		
-		Cliente cliente = new Cliente();
-		cliente.setNome("Ana");
-		cliente.setCpf("12345678909");
-		
-		clientesController.incluir(cliente);
-		livrosController.incluir(livro1);
-		livrosController.incluir(livro2);
-		
-		List<Livro> livros = new ArrayList<Livro>();
+		livros = new ArrayList<Livro>();
 		livros.add(livro1);
 		livros.add(livro2);
 		
-		Pedido pedido = new Pedido();
-		pedido.setCliente(cliente);
-		pedido.setCadastro(LocalDate.now());
-		pedido.setQuantidade(2L);
-		pedido.setValor(livro1.getValor().add(livro2.getValor()));
-		pedido.setLivros(livros);
+		cliente1 = new Cliente();
+		cliente1.setNome("Ana");
+		cliente1.setCpf("12345678909");
 		
-		pedidosController.incluir(pedido);
+		cliente2 = new Cliente();
+		cliente2.setNome("Renato");
+		cliente2.setCpf("32145678909");
+		
+		pedido1 = new Pedido();
+		pedido1.setCliente(cliente1);
+		pedido1.setCadastro(LocalDate.now());
+		pedido1.setQuantidade(2L);
+		pedido1.setValor(livro1.getValor().add(livro2.getValor()));
+		pedido1.setLivros(livros);
+		
+		pedido2 = new Pedido();
+		pedido2.setCliente(cliente2);
+		pedido2.setCadastro(LocalDate.now());
+		pedido2.setQuantidade(2L);
+		pedido2.setValor(livro1.getValor().add(livro2.getValor()));
+		pedido2.setLivros(livros);
+	}
+	
+	@Test
+	@Transactional
+	public void incluir_quandoIncluirUmPedido_deveRetornarApenasUmPedido() {
+		clientesController.incluir(cliente1);
+		livrosController.incluir(livro1);
+		livrosController.incluir(livro2);
+		pedidosController.incluir(pedido1);
 		List<Pedido> pedidos = pedidosController.listar();
 		
 		assertEquals(1, pedidos.size());
@@ -79,50 +100,10 @@ public class PedidosControllerIT {
 	@Test
 	@Transactional
 	public void incluir_quandoIncluirDoisPedidos_deveRetornarDoisPedidos() {
-		
-		Livro livro1 = new Livro();
-		livro1.setTitulo("O jogo dos tronos");
-		livro1.setDescricao("Livro 1 da série As Crônicas de Gelo e Fogo");
-		livro1.setAutor("George R. R. Martin");
-		livro1.setValor(new BigDecimal(40.00));
-		
-		Livro livro2 = new Livro();
-		livro2.setTitulo("Deuses Americanos");
-		livro2.setDescricao("Uma mistura de fantasia e várias vertentes da mitologia antiga e moderna");
-		livro2.setAutor("Neil Gaiman");
-		livro2.setValor(new BigDecimal(45.00));
-		
-		Cliente cliente1 = new Cliente();
-		cliente1.setNome("Ana");
-		cliente1.setCpf("12345678909");
-		
-		Cliente cliente2 = new Cliente();
-		cliente2.setNome("Elvis");
-		cliente2.setCpf("32145678909");
-		
 		clientesController.incluir(cliente1);
 		clientesController.incluir(cliente2);
 		livrosController.incluir(livro1);
 		livrosController.incluir(livro2);
-		
-		List<Livro> livros = new ArrayList<Livro>();
-		livros.add(livro1);
-		livros.add(livro2);
-		
-		Pedido pedido1 = new Pedido();
-		pedido1.setCliente(cliente1);
-		pedido1.setCadastro(LocalDate.now());
-		pedido1.setQuantidade(2L);
-		pedido1.setValor(livro1.getValor().add(livro2.getValor()));
-		pedido1.setLivros(livros);
-		
-		Pedido pedido2 = new Pedido();
-		pedido2.setCliente(cliente2);
-		pedido2.setCadastro(LocalDate.now());
-		pedido2.setQuantidade(2L);
-		pedido2.setValor(livro1.getValor().add(livro2.getValor()));
-		pedido2.setLivros(livros);
-		
 		pedidosController.incluir(pedido1);
 		pedidosController.incluir(pedido2);
 		
@@ -134,42 +115,26 @@ public class PedidosControllerIT {
 	@Test
 	@Transactional
 	public void buscar_quandoBuscarPorCodigo_deveRetornarPedido() {
-		
-		Livro livro1 = new Livro();
-		livro1.setTitulo("O jogo dos tronos");
-		livro1.setDescricao("Livro 1 da série As Crônicas de Gelo e Fogo");
-		livro1.setAutor("George R. R. Martin");
-		livro1.setValor(new BigDecimal(40.00));
-		
-		Livro livro2 = new Livro();
-		livro2.setTitulo("Deuses Americanos");
-		livro2.setDescricao("Uma mistura de fantasia e várias vertentes da mitologia antiga e moderna");
-		livro2.setAutor("Neil Gaiman");
-		livro2.setValor(new BigDecimal(45.00));
-		
-		Cliente cliente = new Cliente();
-		cliente.setNome("Ana");
-		cliente.setCpf("12345678909");
-		
-		clientesController.incluir(cliente);
+		clientesController.incluir(cliente1);
 		livrosController.incluir(livro1);
 		livrosController.incluir(livro2);
-		
-		List<Livro> livros = new ArrayList<Livro>();
-		livros.add(livro1);
-		livros.add(livro2);
-		
-		Pedido pedido = new Pedido();
-		pedido.setCliente(cliente);
-		pedido.setCadastro(LocalDate.now());
-		pedido.setQuantidade(2L);
-		pedido.setValor(livro1.getValor().add(livro2.getValor()));
-		pedido.setLivros(livros);
-		
-		pedidosController.incluir(pedido);
+		pedidosController.incluir(pedido1);
 		Pedido pedidoRetornado = pedidosController.buscar(1L).getBody();
 		
 		assertEquals(pedidoRetornado.getCliente().getNome(), "Ana");
+	}
+	
+	@Test
+	@Transactional
+	public void excluir_quandoExcluirPedido_deveRetornarListaVazia() {
+		clientesController.incluir(cliente1);
+		livrosController.incluir(livro1);
+		livrosController.incluir(livro2);
+		pedidosController.incluir(pedido1);
+		pedidosController.excluir(1L);
+		List<Pedido> pedidos = pedidosController.listar();
+		
+		assertEquals(0, pedidos.size());
 	}
 	
 }

@@ -1,6 +1,7 @@
 package br.com.tpa.livrariaapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class LivrosService {
 		return livrosRepository.findAll();
 	}
 	
-	public Livro buscar(Long codigo) {
-		Livro livro = livrosRepository.findById(codigo).orElse(null);
+	public Optional<Livro> buscar(Long codigo) {
+		Optional<Livro> livro = livrosRepository.findById(codigo);
 		return livro;
 	}
 	

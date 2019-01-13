@@ -1,6 +1,7 @@
 package br.com.tpa.livrariaapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class PedidosService {
 		return pedidosRepository.findAll();
 	}
 	
-	public Pedido buscar(Long codigo) {
-		Pedido pedido = pedidosRepository.findById(codigo).orElse(null);
+	public Optional<Pedido> buscar(Long codigo) {
+		Optional<Pedido> pedido = pedidosRepository.findById(codigo);
 		return pedido;
 	}
 	

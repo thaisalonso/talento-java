@@ -5,6 +5,7 @@ import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,19 +39,24 @@ public class PedidosController {
 
 	@GetMapping(params = "codigo")
 	public ResponseEntity<Pedido> buscar(@RequestParam("codigo") Long codigo) {
-		Pedido pedido = pedidosService.buscar(codigo);
-		if (pedido == null) {
+		Optional<Pedido> pedido = pedidosService.buscar(codigo);
+		if (pedido.isPresent()) {
+			return ok(pedido.get());
+		} else {
 			return notFound().build();
 		}
-		return ok(pedido);
+		
 	}
 	
 	@DeleteMapping(params = "codigo")
 	public ResponseEntity<Void> excluir(@RequestParam("codigo") Long codigo) {
-		Pedido pedido = pedidosService.buscar(codigo);
-		if (pedido == null) {
+		Optional<Pedido> pedido = pedidosService.buscar(codigo);
+		if (pedido.isPresent()) {
+			pedidosService.excluir(pedido.get());
+			return noContent().build();
+		} else {
 			return notFound().build();
 		}
-		return noContent().build();
+		
 	}
 }
