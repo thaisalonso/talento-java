@@ -31,5 +31,9 @@ public class LivrosService {
 	public void excluir(Livro livro) {
 		livrosRepository.delete(livro);
 	}
+	
+	public List<Livro> buscarPorCodigos(List<Long> codigos) {
+		return livrosRepository.buscarPorCodigos(codigos);
+	}
 
 }

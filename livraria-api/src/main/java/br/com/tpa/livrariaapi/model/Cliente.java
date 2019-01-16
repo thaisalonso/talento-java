@@ -18,7 +18,7 @@ public class Cliente {
 	
 	@NotNull
 	private String cpf;
-
+	
 	public Long getCodigo() {
 		return codigo;
 	}

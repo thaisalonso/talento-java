@@ -6,12 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Livro.buscarPorCodigos", query = "SELECT l FROM Livro l WHERE l.codigo IN :codigos")
+})
 public class Livro {
 	
 	@Id
@@ -30,18 +32,6 @@ public class Livro {
 	@NotNull
 	private BigDecimal valor;
 	
-	@ManyToOne
-	@JsonIgnore
-	private Pedido pedido;
-
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
 	public Long getCodigo() {
 		return codigo;
 	}
