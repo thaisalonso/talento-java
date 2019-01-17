@@ -56,16 +56,16 @@ public class ClientesControllerIT {
 	@Test
 	@Transactional
 	public void buscar_quandoBuscarPorCodigo_deveRetornarCliente() {
-		controller.incluir(cliente1);
-		Cliente clienteRetornado = controller.buscar(1L).getBody();
+		Cliente clienteIncluido = controller.incluir(cliente1);
+		Cliente clienteRetornado = controller.buscar(clienteIncluido.getCodigo()).getBody();
 		assertEquals(clienteRetornado.getNome(), "Ana");
 	}
 	
 	@Test
 	@Transactional
 	public void excluir_quandoExcluirCliente_deveRetornarListaVazia() {
-		controller.incluir(cliente1);
-		controller.excluir(1L);
+		Cliente clienteIncluido = controller.incluir(cliente1);
+		controller.excluir(clienteIncluido.getCodigo());
 		List<Cliente> clientes = controller.listar();
 		assertEquals(0, clientes.size());
 	}

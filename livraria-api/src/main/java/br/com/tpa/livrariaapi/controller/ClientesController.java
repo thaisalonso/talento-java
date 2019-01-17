@@ -7,14 +7,18 @@ import static org.springframework.http.ResponseEntity.ok;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tpa.livrariaapi.model.Cliente;
@@ -37,8 +41,8 @@ public class ClientesController {
 		return clientesService.listar();
 	}
 	
-	@GetMapping(params = "codigo")
-	public ResponseEntity<Cliente> buscar(@RequestParam("codigo") Long codigo) {
+	@GetMapping("/{codigo}")
+	public ResponseEntity<Cliente> buscar(@PathVariable("codigo") Long codigo) {
 		Optional<Cliente> cliente = clientesService.buscar(codigo);
 		if (cliente.isPresent()) {
 			return ok(cliente.get());
@@ -47,15 +51,26 @@ public class ClientesController {
 		}
 	}
 	
-	@DeleteMapping(params = "codigo")
-	public ResponseEntity<Void> excluir(@RequestParam("codigo") Long codigo) {
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<Void> excluir(@PathVariable("codigo") Long codigo) {
 		Optional<Cliente> cliente = clientesService.buscar(codigo);
-		if (cliente.isPresent()) {
-			clientesService.excluir(cliente.get());
-			return noContent().build();
-		} else {
+		if (!cliente.isPresent()) {
 			return notFound().build();
-		}
+		} 
+		clientesService.excluir(cliente.get());
+		return noContent().build();
+	}
+	
+	@PutMapping("/{codigo}")
+	public ResponseEntity<Cliente> atualizar(@PathVariable("codigo") Long codigo, @Valid @RequestBody Cliente livro) {
+		Optional<Cliente> clienteBuscado = clientesService.buscar(codigo);
+		if (!clienteBuscado.isPresent()) {
+			return noContent().build();
+		} 
+		Cliente clienteExistente = clienteBuscado.get();
+		BeanUtils.copyProperties(livro, clienteExistente, "codigo");
+		clienteExistente = clientesService.incluir(clienteExistente);
+		return ok(clienteExistente);
 	}
 	
 }

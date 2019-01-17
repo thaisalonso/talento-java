@@ -7,14 +7,18 @@ import static org.springframework.http.ResponseEntity.ok;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tpa.livrariaapi.model.Livro;
@@ -37,8 +41,8 @@ public class LivrosController {
 		return livrosService.listar();
 	}
 	
-	@GetMapping(params = "codigo")
-	public ResponseEntity<Livro> buscar(@RequestParam("codigo") Long codigo) {
+	@GetMapping("/{codigo}")
+	public ResponseEntity<Livro> buscar(@PathVariable("codigo") Long codigo) {
 		Optional<Livro> livro = livrosService.buscar(codigo);
 		if (livro.isPresent()) {
 			return ok(livro.get());
@@ -48,15 +52,27 @@ public class LivrosController {
 		
 	}
 	
-	@DeleteMapping(params = "codigo")
-	public ResponseEntity<Void> excluir(@RequestParam("codigo") Long codigo) {
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<Void> excluir(@PathVariable("codigo") Long codigo) {
 		Optional<Livro> livro = livrosService.buscar(codigo);
 		if (livro.isPresent()) {
 			livrosService.excluir(livro.get());
 			return noContent().build();
 		} else {
-			return noContent().build();
+			return notFound().build();
 		}
 	}
-
+	
+	@PutMapping("/{codigo}")
+	public ResponseEntity<Livro> atualizar(@PathVariable("codigo") Long codigo, @Valid @RequestBody Livro livro) {
+		Optional<Livro> livroBuscado = livrosService.buscar(codigo);
+		if (!livroBuscado.isPresent()) {
+			return noContent().build();
+		} 
+		Livro livroExistente = livroBuscado.get();
+		BeanUtils.copyProperties(livro, livroExistente, "codigo");
+		livroExistente = livrosService.incluir(livroExistente);
+		return ok(livroExistente);
+	}
+		
 }

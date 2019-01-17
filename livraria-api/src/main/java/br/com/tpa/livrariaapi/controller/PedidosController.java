@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tpa.livrariaapi.model.Pedido;
@@ -37,19 +37,18 @@ public class PedidosController {
 		return pedidosService.listar();
 	}
 
-	@GetMapping(params = "codigo")
-	public ResponseEntity<Pedido> buscar(@RequestParam("codigo") Long codigo) {
+	@GetMapping("/{codigo}")
+	public ResponseEntity<Pedido> buscar(@PathVariable("codigo") Long codigo) {
 		Optional<Pedido> pedido = pedidosService.buscar(codigo);
 		if (pedido.isPresent()) {
 			return ok(pedido.get());
 		} else {
 			return notFound().build();
 		}
-		
 	}
 	
-	@DeleteMapping(params = "codigo")
-	public ResponseEntity<Void> excluir(@RequestParam("codigo") Long codigo) {
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<Void> excluir(@PathVariable("codigo") Long codigo) {
 		Optional<Pedido> pedido = pedidosService.buscar(codigo);
 		if (pedido.isPresent()) {
 			pedidosService.excluir(pedido.get());

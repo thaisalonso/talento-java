@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +20,7 @@ public class Pedido {
 	private Long codigo;
 	
 	@NotNull
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Cliente cliente;
 	
 	@NotNull
@@ -58,7 +57,19 @@ public class Pedido {
 	}
 
 	public void setLivros(List<Livro> livros) {
+		/*this.valor = livros.stream()
+		  .map(Livro::getValor)
+		  .reduce(BigDecimal.ZERO, BigDecimal::add);
+		this.quantidade = Long.valueOf(livros.size());*/
 		this.livros = livros;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public void setQuantidade(Long quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public LocalDate getCadastro() {
@@ -73,16 +84,8 @@ public class Pedido {
 		return valor;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
 	public Long getQuantidade() {
 		return quantidade;
-	}
-
-	public void setQuantidade(Long quantidade) {
-		this.quantidade = quantidade;
 	}
 	
 }

@@ -61,16 +61,16 @@ public class LivrosControllerIT {
 	@Test
 	@Transactional
 	public void buscar_quandoBuscarPorCodigo_deveRetornarLivro() {
-		controller.incluir(livro1);
-		Livro livroRetornado = controller.buscar(1L).getBody();
+		Livro livroIncluido = controller.incluir(livro1);
+		Livro livroRetornado = controller.buscar(livroIncluido.getCodigo()).getBody();
 		assertEquals(livroRetornado.getTitulo(), "O jogo dos tronos");
 	}
 	
 	@Test
 	@Transactional
 	public void excluir_quandoExcluirLivro_deveRetornarListaVazia() {
-		controller.incluir(livro1);
-		controller.excluir(1L);
+		Livro livroIncluido = controller.incluir(livro1);
+		controller.excluir(livroIncluido.getCodigo());
 		List<Livro> livros = controller.listar();
 		assertEquals(0, livros.size());
 	}

@@ -11,6 +11,8 @@ Possui os seguintes serviços:
 * Listar livros;
 * Listar clientes;
 * Listar pedidos;
+* Atualizar livro;
+* Atualizar cliente;
 * Excluir livro;
 * Excluir cliente;
 * Excluir pedido.

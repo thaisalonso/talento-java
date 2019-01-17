@@ -1,5 +1,6 @@
 package br.com.tpa.livrariaapi.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,9 +39,14 @@ public class PedidosService {
 		List<Livro> livros = livrosService.buscarPorCodigos(codigosLivros);
 		if (livros.isEmpty()) {
 			throw new LivroNaoEncontradoException("Livros não encontrados");
-		} else {
-			pedido.setLivros(livros);
 		}
+		BigDecimal total = livros.stream()
+				  .map(Livro::getValor)
+				  .reduce(BigDecimal.ZERO, BigDecimal::add);
+		Long quantidade = Long.valueOf(livros.size());
+		pedido.setLivros(livros);
+		pedido.setValor(total);
+		pedido.setQuantidade(quantidade);
 		return pedidosRepository.save(pedido);
 	}
 	

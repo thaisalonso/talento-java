@@ -73,15 +73,11 @@ public class PedidosControllerIT {
 		pedido1 = new Pedido();
 		pedido1.setCliente(cliente1);
 		pedido1.setCadastro(LocalDate.now());
-		pedido1.setQuantidade(2L);
-		pedido1.setValor(livro1.getValor().add(livro2.getValor()));
 		pedido1.setLivros(livros);
 		
 		pedido2 = new Pedido();
 		pedido2.setCliente(cliente2);
 		pedido2.setCadastro(LocalDate.now());
-		pedido2.setQuantidade(2L);
-		pedido2.setValor(livro1.getValor().add(livro2.getValor()));
 		pedido2.setLivros(livros);
 	}
 	
@@ -118,8 +114,8 @@ public class PedidosControllerIT {
 		clientesController.incluir(cliente1);
 		livrosController.incluir(livro1);
 		livrosController.incluir(livro2);
-		pedidosController.incluir(pedido1);
-		Pedido pedidoRetornado = pedidosController.buscar(1L).getBody();
+		Pedido pedidoIncluido = pedidosController.incluir(pedido1);
+		Pedido pedidoRetornado = pedidosController.buscar(pedidoIncluido.getCodigo()).getBody();
 		
 		assertEquals(pedidoRetornado.getCliente().getNome(), "Ana");
 	}
@@ -130,8 +126,8 @@ public class PedidosControllerIT {
 		clientesController.incluir(cliente1);
 		livrosController.incluir(livro1);
 		livrosController.incluir(livro2);
-		pedidosController.incluir(pedido1);
-		pedidosController.excluir(1L);
+		Pedido pedidoIncluido = pedidosController.incluir(pedido1);
+		pedidosController.excluir(pedidoIncluido.getCodigo());
 		List<Pedido> pedidos = pedidosController.listar();
 		
 		assertEquals(0, pedidos.size());
