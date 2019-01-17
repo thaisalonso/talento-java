@@ -25,7 +25,7 @@ import br.com.tpa.livrariaapi.model.Pedido;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PedidosControllerIT {
+public class PedidosControllerTests {
 
 	@Autowired
 	private PedidosController pedidosController;

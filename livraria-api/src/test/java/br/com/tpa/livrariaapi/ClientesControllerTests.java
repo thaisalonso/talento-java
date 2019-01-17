@@ -18,7 +18,7 @@ import br.com.tpa.livrariaapi.model.Cliente;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ClientesControllerIT {
+public class ClientesControllerTests {
 	
 	@Autowired
 	private ClientesController controller;

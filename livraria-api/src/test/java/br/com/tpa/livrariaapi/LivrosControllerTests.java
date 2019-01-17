@@ -19,7 +19,7 @@ import br.com.tpa.livrariaapi.model.Livro;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LivrosControllerIT {
+public class LivrosControllerTests {
 
 	@Autowired
 	private LivrosController controller;
