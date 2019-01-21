@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tpa.livrariaapi.model.Cliente;
@@ -41,8 +42,8 @@ public class ClientesController {
 		return clientesService.listar();
 	}
 	
-	@GetMapping("/{codigo}")
-	public ResponseEntity<Cliente> buscar(@PathVariable("codigo") Long codigo) {
+	@GetMapping(params = "codigo")
+	public ResponseEntity<Cliente> buscar(@RequestParam("codigo") Long codigo) {
 		Optional<Cliente> cliente = clientesService.buscar(codigo);
 		if (cliente.isPresent()) {
 			return ok(cliente.get());
@@ -73,4 +74,13 @@ public class ClientesController {
 		return ok(clienteExistente);
 	}
 	
+	@GetMapping(params = "nome")
+	public List<Cliente> buscarPorNome(@RequestParam("nome") String nome) {
+		return clientesService.buscarPorNome(nome);
+	}
+	
+	@GetMapping(params = "cpf")
+	public List<Cliente> buscarPorCpf(@RequestParam("cpf") String cpf) {
+		return clientesService.buscarPorCpf(cpf);
+	}
 }

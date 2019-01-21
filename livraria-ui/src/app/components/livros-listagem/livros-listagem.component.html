@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Consulta de Livros</h2>
+    </div>
+
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary" [class.active]="tipoBusca === 'buscaPorTitulo'">
+        <input type="radio" name="busca" id="opcao1" value="buscaPorTitulo" [(ngModel)]="tipoBusca" autocomplete="off" (click)='limpar()'>
+        Título
+      </label>
+      <label class="btn btn-secondary" [class.active]="tipoBusca === 'buscaPorAutor'">
+        <input type="radio" name="busca" id="opcao2" value="buscaPorAutor" [(ngModel)]="tipoBusca" autocomplete="off" (click)='limpar()'>
+        Autor
+      </label>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-12 ui-md-3">
+        <input pInputText id="filtro" name="filtro" [(ngModel)]="filtro" required />
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <button id="btnConsultar" value="Consultar" class="btn btn-primary form-control" type="submit" (click)='buscar(tipoBusca, filtro)' [disabled]="!tipoBusca"><i class="fa fa-search"></i> Consultar</button>
+      </div>
+    </div>
+
+    <div *ngIf="livros">
+      <p-table [columns]="cols" [value]="livros" selectionMode="single" [(selection)]="livroSelecionado">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{ col.field == 'valor'? (rowData[col.field] | currency:'BRL': 'symbol') : rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="ui-g-12">
+        <div class="ui-g-2">
+          <button routerLink="/cadastroLivro" id="btnNovo" value="Novo" class="btn btn-primary form-control" type="submit"><i class="fa fa-plus"></i> Novo</button>
+        </div> 
+        <div class="ui-g-2" *ngIf="livros">
+            <button id="btnEditar" value="Editar" class="btn btn-block btn-primary" type="submit" (click)='editar()' [disabled]="!livroSelecionado"><i class="fa fa-pencil"></i> Editar</button>
+        </div> 
+        <div class="ui-g-2" *ngIf="livros">
+            <button id="btnExcluir" value="Excluir" class="btn btn-block btn-danger" type="submit" (click)='excluir()' [disabled]="true"><i class="fa fa-trash"></i> Excluir</button>
+        </div>      
+     </div>
+ 
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Cadastro de Livros</h2>
+    </div>
+
+    <form method="post" #frm="ngForm" (ngSubmit)="incluir(frm)">
+    <div class="ui-g-12">
+      <div class="ui-g-12 ui-md-4">
+        <label>Título </label>
+        <input pInputText id="titulo" name="titulo" [(ngModel)]="livro.titulo" required />
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <label>Descrição </label>
+        <input pInputText id="descricao" name="descricao" [(ngModel)]="livro.descricao" required />
+      </div>
+    </div>
+    <div class="ui-g-12">
+        <div class="ui-g-12 ui-md-4">
+            <label>Autor </label>
+            <input pInputText id="autor" name="autor" [(ngModel)]="livro.autor" required />
+          </div>
+      <div class="ui-g-12 ui-md-4">
+        <label>Valor </label>
+        <input pInputText id="valor" name="valor" [(ngModel)]="livro.valor" required />
+      </div>
+    </div>
+    <div class="ui-g-4">
+        <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
+    </div>
+  </form>
+
+  </div>
+</div>

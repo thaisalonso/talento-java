@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Lista de Pedidos</h2>
+    </div>
+
+    <div *ngIf="pedidos">
+        <p-table [columns]="cols" [value]="pedidos" selectionMode="single" [(selection)]="pedidoSelecionado">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                {{col.field == 'cadastro'?  (rowData[col.field] | date: 'dd/MM/yyyy'): col.field == 'valor'? (rowData[col.field] | currency:'BRL': 'symbol') : rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+    </div>
+
+    <div *ngIf="pedidoSelecionado">
+      <h5>Dados do Cliente</h5>
+      <p><b>Nome: </b> {{pedidoSelecionado.cliente.nome}}</p>
+      <p><b>CPF: </b> {{pedidoSelecionado.cliente.cpf | cpfMask}}</p>
+    </div>
+
+    <div *ngIf="pedidoSelecionado">
+        <h5>Livros</h5>
+        <p-table [columns]="colsLivros" [value]="pedidoSelecionado.livros">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                  {{ col.field == 'valor'? (rowData[col.field] | currency:'BRL': 'symbol') : rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+    </div>
+
+    <div class="ui-g-12">
+        <div class="ui-g-2">
+          <button routerLink="/cadastroPedido" id="btnNovo" value="Novo" class="btn btn-primary form-control" type="submit"><i class="fa fa-plus"></i> Novo Pedido</button>
+        </div>   
+        <div class="ui-g-2">
+            <button routerLink="/cadastroCliente" id="btnNovoCliente" value="Novo" class="btn btn-primary form-control" type="submit"><i class="fa fa-plus"></i> Novo Cliente</button>
+        </div> 
+        <div class="ui-g-2">
+            <button routerLink="/cadastroLivro" id="btnNovoLivro" value="Novo" class="btn btn-primary form-control" type="submit"><i class="fa fa-plus"></i> Novo Livro</button>
+        </div> 
+    </div>
+ 
+  </div>
+</div>
+

@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>Consulta de Clientes</h2>
+      </div>
+  
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary" [class.active]="tipoBusca === 'buscaPorCpf'">
+          <input type="radio" name="busca" id="opcao1" value="buscaPorCpf" [(ngModel)]="tipoBusca" autocomplete="off" (click)='limpar()'>
+          CPF
+        </label>
+        <label class="btn btn-secondary" [class.active]="tipoBusca === 'buscaPorNome'">
+          <input type="radio" name="busca" id="opcao2" value="buscaPorNome" [(ngModel)]="tipoBusca" autocomplete="off" (click)='limpar()'>
+          Nome
+        </label>
+      </div>
+  
+      <div class="ui-g-12">
+        <div class="ui-g-12 ui-md-3">
+          <input pInputText id="filtro" name="filtro" [(ngModel)]="filtro" required />
+        </div>
+        <div class="ui-g-12 ui-md-2">
+          <button id="btnConsultar" value="Consultar" class="btn btn-primary form-control" type="submit" (click)='buscar(tipoBusca, filtro)' [disabled]="!tipoBusca"><i class="fa fa-search"></i> Consultar</button>
+        </div>
+      </div>
+  
+      <div *ngIf="clientes">
+        <p-table [columns]="cols" [value]="clientes" selectionMode="single" [(selection)]="clienteSelecionado">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                  {{col.field == 'cpf'? (rowData[col.field] | cpfMask) : rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="ui-g-12">
+          <div class="ui-g-2">
+            <button routerLink="/cadastroCliente" id="btnNovo" value="Novo" class="btn btn-primary form-control" type="submit"><i class="fa fa-plus"></i> Novo</button>
+          </div> 
+          <div class="ui-g-2" *ngIf="clientes">
+              <button id="btnEditar" value="Editar" class="btn btn-block btn-primary" type="submit" (click)='editar()' [disabled]="!clienteSelecionado"><i class="fa fa-pencil"></i> Editar</button>
+          </div> 
+          <div class="ui-g-2" *ngIf="clientes">
+              <button id="btnExcluir" value="Excluir" class="btn btn-block btn-danger" type="submit" (click)='excluir()' [disabled]="true"><i class="fa fa-trash"></i> Excluir</button>
+          </div>      
+       </div>
+   
+    </div>
+  </div>
+  

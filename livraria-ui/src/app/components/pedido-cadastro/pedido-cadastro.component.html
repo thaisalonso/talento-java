@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Cadastro de Pedidos</h2>
+    </div>
+
+    <form method="post" #frm="ngForm" (ngSubmit)="incluir(frm)">
+      <div class="ui-g-12">
+        <h5>Selecione o cliente:</h5>
+        <p-listbox [options]="clientes" [(ngModel)]="clienteSelecionado" optionLabel="nome" name="clientes">
+          <p-header>
+            <i class="fa fa-user"></i>
+            Clientes
+          </p-header>
+        </p-listbox>
+        <p>Cliente selecionado: {{clienteSelecionado ? clienteSelecionado.nome : 'nenhum'}}</p>
+      
+
+      <h5>Selecione os livros:</h5>
+      <p-listbox [options]="livros" [(ngModel)]="livrosSelecionados" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="titulo" name="livros">
+        <p-header>
+          <i class="fa fa-book"></i>
+          Livros
+        </p-header>
+      </p-listbox>
+      <p>Livros selecionados: <span *ngFor="let l of livrosSelecionados" style="margin-right: 10px">{{l.titulo}}</span></p>
+  </div>
+
+  <div class="ui-g-4">
+    <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
+  </div>
+  </form>
+
+</div>
+</div>

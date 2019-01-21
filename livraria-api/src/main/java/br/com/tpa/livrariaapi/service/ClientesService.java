@@ -32,4 +32,11 @@ public class ClientesService {
 		clientesRepository.delete(cliente);
 	}
 
+	public List<Cliente> buscarPorNome(String nome) {
+		return clientesRepository.buscarPorNome("%" + nome + "%");
+	}
+	
+	public List<Cliente> buscarPorCpf(String cpf) {
+		return clientesRepository.buscarPorCpf(cpf);
+	}
 }

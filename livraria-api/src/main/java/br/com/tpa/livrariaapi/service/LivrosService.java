@@ -36,5 +36,12 @@ public class LivrosService {
 		return livrosRepository.buscarPorCodigos(codigos);
 	}
 	
+	public List<Livro> buscarPorTitulo(String titulo) {
+		return livrosRepository.buscarPorTitulo("%" + titulo + "%");
+	}
+	
+	public List<Livro> buscarPorAutor(String autor) {
+		return livrosRepository.buscarPorAutor("%" + autor + "%");
+	}
 
 }

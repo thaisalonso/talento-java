@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Livro.buscarPorCodigos", query = "SELECT l FROM Livro l WHERE l.codigo IN :codigos")
+	@NamedQuery(name = "Livro.buscarPorCodigos", query = "SELECT l FROM Livro l WHERE l.codigo IN :codigos"),
+	@NamedQuery(name = "Livro.buscarPorTitulo", query = "SELECT l FROM Livro l WHERE UPPER(l.titulo) LIKE UPPER(:titulo)"),
+	@NamedQuery(name = "Livro.buscarPorAutor", query = "SELECT l FROM Livro l WHERE UPPER(l.autor) LIKE UPPER(:autor)")
 })
 public class Livro {
 	

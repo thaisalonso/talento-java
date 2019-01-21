@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tpa.livrariaapi.model.Livro;
@@ -41,8 +42,8 @@ public class LivrosController {
 		return livrosService.listar();
 	}
 	
-	@GetMapping("/{codigo}")
-	public ResponseEntity<Livro> buscar(@PathVariable("codigo") Long codigo) {
+	@GetMapping(params = "codigo")
+	public ResponseEntity<Livro> buscar(@RequestParam("codigo") Long codigo) {
 		Optional<Livro> livro = livrosService.buscar(codigo);
 		if (livro.isPresent()) {
 			return ok(livro.get());
@@ -73,6 +74,16 @@ public class LivrosController {
 		BeanUtils.copyProperties(livro, livroExistente, "codigo");
 		livroExistente = livrosService.incluir(livroExistente);
 		return ok(livroExistente);
+	}
+	
+	@GetMapping(params = "titulo")
+	public List<Livro> buscarPorTitulo(@RequestParam("titulo") String titulo) {
+		return livrosService.buscarPorTitulo(titulo);
+	}
+	
+	@GetMapping(params = "autor")
+	public List<Livro> buscarPorAutor(@RequestParam("autor") String autor) {
+		return livrosService.buscarPorAutor(autor);
 	}
 		
 }

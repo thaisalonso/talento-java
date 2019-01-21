@@ -1,6 +1,7 @@
 package br.com.tpa.livrariaapi.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +48,7 @@ public class PedidosService {
 		pedido.setLivros(livros);
 		pedido.setValor(total);
 		pedido.setQuantidade(quantidade);
+		pedido.setCadastro(LocalDate.now());
 		return pedidosRepository.save(pedido);
 	}
 	
